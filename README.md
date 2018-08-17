@@ -8,4 +8,4 @@ npm run dev
 # Running on Production
 npm start
 ```
-For more information about websocket see socket.io
+For more information about websocket see http://socket.io
