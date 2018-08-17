@@ -1,0 +1,20 @@
+{
+  "name": "socket-app",
+  "version": "1.0.0",
+  "description": "A simple socket app",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Guilherme Beidaki Peres",
+  "license": "MIT",
+  "dependencies": {
+    "desktop-screenshot": "^0.1.1",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}

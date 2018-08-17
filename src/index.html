@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Screen</title>
+    <style>
+      #image {
+        min-height: 100%;
+        min-width: 1024px;
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <img id="image" :src="img">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      'use strict';
+      var io = io();
+      new Vue({
+        el: '#app',
+        data: {
+          img: ''
+        },
+        mounted: function mounted() {
+          var _this = this;
+          io.emit('start');
+          io.on('start', function (info) {
+            var imgData = 'data:image/png;base64, ' + info.buffer;
+            _this.img = imgData;
+            io.emit('start');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
