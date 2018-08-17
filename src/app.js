@@ -7,14 +7,12 @@ const screenshot = require('desktop-screenshot')
 const ifaces = os.networkInterfaces()
 
 let ipList = []
+let usersConnected = 0
+
 Object.keys(ifaces).forEach(ifname => {
-  let alias = 0
   ifaces[ifname].forEach(iface => {
-    if ('IPv4' !== iface.family || iface.internal !== false) {
-      return
-    }
+    if ('IPv4' !== iface.family || iface.internal !== false) return
     ipList.push({ interface: ifname, address: iface.address })
-    alias++
   })
 })
 
@@ -23,8 +21,12 @@ app.get('/', (req, res) => {
 })
 
 io.on('connect', socket => {
-  console.log('user has connected')
-  socket.on('disconnect', () => console.log('user has disconnected'))
+  usersConnected++
+  console.log(`Users Connected: ${usersConnected}`)
+  socket.on('disconnect', () => {
+    usersConnected--
+    console.log(`Users Connected: ${usersConnected}`)
+  })
   socket.on('start', () => {
     setTimeout(() =>{
       screenshot("src/images/screenshot.png", (error, complete) => {
